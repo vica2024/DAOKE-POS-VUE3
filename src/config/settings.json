@@ -1,5 +1,6 @@
 {
   "theme": "dark",
+  "messageCount":0,
   "colorWeak": false,
   "navbar": true,
   "menu": true,
@@ -10,10 +11,13 @@
   "themeColor": "#165DFF",
   "menuWidth": 89,
   "globalSettings": false,
-  "projectName": "Diamond-POS",
+  "projectName": "Diamond POS",
   "multiTabs": true,
   "device": "desktop",
   "tabBar": false,
   "menuFromServer": false,
-  "serverMenu": []
+  "serverMenu": [],
+  "modalsState":{
+    "goodsAttrsModal":false
+  }
 }

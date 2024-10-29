@@ -14,17 +14,17 @@
           @item-click="handleItemClick"
         />
       </a-tab-pane>
-      <template #extra>
+      <!-- <template #extra>
         <a-button type="text" @click="emptyList">
           {{ $t('messageBox.tab.button') }}
         </a-button>
-      </template>
+      </template> -->
     </a-tabs>
   </a-spin>
 </template>
 
 <script setup>
-  import { ref, reactive, toRefs, computed } from 'vue';
+  import { ref, reactive, toRefs, computed, provide } from 'vue';
   import { useI18n } from 'vue-i18n';
   import {
     queryMessageList,
@@ -34,14 +34,9 @@
   } from '@/api/message';
   import useLoading from '@/hooks/loading';
   import List from './list.vue';
-
-  // interface TabItem {
-  //   key: string;
-  //   title: string;
-  //   avatar?: string;
-  // }
   const { loading, setLoading } = useLoading(true);
   const messageType = ref('message');
+
   const { t } = useI18n();
   const messageData = reactive({
     renderList: [],
@@ -73,9 +68,9 @@
       setLoading(false);
     }
   }
-  async function readMessage(data) {
-    const ids = data.map((item) => item.id);
-    await setMessageStatus({ ids });
+  async function readMessage(list) {
+    const ids = list.map((item) => item.id);
+    const {data } = await setMessageStatus({ ids });
     fetchSourceData();
   }
   const renderList = computed(() => {
@@ -103,6 +98,7 @@
     messageData.messageList = [];
   };
   fetchSourceData();
+
 </script>
 
 <style scoped lang="less">

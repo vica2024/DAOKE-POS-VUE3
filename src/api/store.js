@@ -9,3 +9,10 @@ export function getRechargeInfo() {
     method: 'get'
   });
 }
+
+export function getStoreInfo() {
+  return axios({
+    url: '/store/info',
+    method: 'get'
+  });
+}

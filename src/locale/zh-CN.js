@@ -10,12 +10,23 @@ import localeSettings from "./zh-CN/settings";
 import localeCashier from "@/views/cashier/locale/zh-CN.js";
 
 //for customer language
-import localeCustomer from "@/views/customer/locale/zh-CN.js";
+import localePending from "@/views/pending/locale/zh-CN.js";
+
+//for order language
+import localeOrder from "@/views/order/locale/zh-CN.js";
+
+//for weite-off language
+import localeWriteOff from "@/views/write-off/locale/zh-CN.js";
+
+//for refund language
+import localeRefund from "@/views/refund/locale/zh-CN.js";
 
 export default {
+	"user.admin": "管理员",
+	"user.cashier": "收银员",
 	"menu.cashier": "销售",
 	"menu.refund": "退货",
-	"menu.deposit": "订金",
+	"menu.pendingOrder": "挂单",
 	"menu.redeem-coupon": "核销",
 	"menu.order": "订单",
 	"menu.customer": "顾客",
@@ -39,9 +50,14 @@ export default {
 	"modal.title.view": "查看",
 	"modal.footer.cancel": "取消",
 	"modal.footer.ok": "确定",
+	"modal.footer.confirm": "确认",
+	"modal.footer.modify": "修改",
+	"modal.footer.reset": "重置",
 	"modal.footer.save": "保存",
 	"modal.footer.create": "创建",
 	"modal.footer.delete": "删除",
+	"modal.footer.search":"搜索",
+	
 
 	"message.success.add": "新增成功",
 	"message.success.edit": "编辑成功",
@@ -61,5 +77,8 @@ export default {
 	...locale404,
 	...locale500,
 	...localeCashier,
-	...localeCustomer,
+	...localePending,
+	...localeOrder,
+	...localeWriteOff,
+	...localeRefund
 };

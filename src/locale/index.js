@@ -1,10 +1,17 @@
 import { createI18n } from 'vue-i18n';
 import en from './en-US';
 import cn from './zh-CN';
+import ja from './ja-JP';
+import tw from './zh-TW';
+import fr from './fr-FR';
+
 
 export const LOCALE_OPTIONS = [
-  { label: '中文', value: 'zh-CN' },
+  { label: '简体中文', value: 'zh-CN' },
+  { label: '繁体中文', value: 'zh-TW' },
+  { label: '日本語', value: 'ja-JP' },
   { label: 'English', value: 'en-US' },
+  { label: 'Français', value: 'fr-FR' },
 ];
 const defaultLocale = localStorage.getItem('arco-locale') || 'zh-CN';
 
@@ -16,6 +23,9 @@ const i18n = createI18n({
   messages: {
     'en-US': en,
     'zh-CN': cn,
+    'ja-JP': ja,
+    'zh-TW': tw,
+    'fr-FR': fr,
   },
 });
 

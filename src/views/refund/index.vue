@@ -1,145 +1,197 @@
-<script setup>
-import {ref} from "vue";
-import CustomerDetails from "@/views/customer/components/customer-details.vue";
-import CustomerRechargeHistory from "@/views/customer/components/customer-recharge-history.vue";
-import CustomerVip from "@/views/customer/components/customer-vip.vue";
-import {getDataInfo, getHangList} from "@/api/order.js";
-
-const openVerify = ref(false);
-const keyWords = ref('');
-const userInfo = ref({});
-const customerList = ref([]);
-const getOne = ref(0);
-const selIndex = ref(0);
-const tabs = ['商品信息', '订单详情', '订单记录'];
-
-const getDepositOrderList = async () => {
-  const {data} = await getHangList();
-  console.log(data)
-  customerList.value = data.list
-}
-
-const getDepositList = async () => {
-  const {data} = await getDataInfo(10);
-  userInfo.value = data.userInfo;
-  console.log(data)
-}
-getDepositList();
-getDepositOrderList();
-</script>
-
 <template>
-  <div class="w-full h-full pl-5 pr-5 overflow-hidden">
-    <div class="h-full rounded-3xl">
-      <div class="flex h-full">
-        <div class="w-2/5 h-full rounded-3xl bg-white">
-          <div class="flex p-5">
-            <div class="flex-1">
-              <a-typography-title style="margin-top: 0;" :heading="5">售后订单</a-typography-title>
-            </div>
-            <span class="leading-7 cursor-pointer">筛选</span>
-          </div>
-          <div class="p-5">
-            <a-input-search v-model="keyWords" placeholder="搜索订单号" size="large" search-button/>
-          </div>
-          <div class="overflow-hidden overflow-y-auto" style="height: 74vh">
-            <div class="mt-5" v-if="customerList.length">
-              <div :class="['pt-5 pb-5',{'selected': index===getOne }]" v-for="(item, index) in customerList"
-                   :key="index" @click="getOne = index">
-                <div class="flex items-center pl-5 pr-5 cursor-pointer">
-                  <div class="flex-1">
-                    <div class="text-base flex justify-between">
-                      <span class="text-bold">订单号 wx2342342334</span>
-                      <span class="text-sm text-gray-400">{{ item.phone }}13168320604</span>
-                    </div>
-                    <div class="flex justify-between mt-1">
-                      <a-avatar>
-                        <img alt="avatar"
-                             :src="item.avatar ? item.avatar : 'https://multi-store.crmeb.net/view_cashier/img/yonghu.908b01d3.png'"/>
-                      </a-avatar>
-                      <div class="text-sm">
-                        <span class="text-base text-bold text-rose-600 block">￥{{ item.price }}</span>
-                        <span class="text-gray-400">共2件商品</span>
-                      </div>
-                    </div>
-                    <div class="mt-5 flex justify-between">
-                      <span class="mr-5">待评价</span>
-                      <span class="text-sm text-gray-400">收银员：CRMEB官方自营店</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+  <div class="flex h-full">
+    <div class="w-2/5 h-full min-w-[360px] max-w-[460px] rounded-2xl bg-white">
+      <div class="pr-4 pl-4 pt-4">
+        <div class="flex justify-between">
+          <h3 class="text-[14px] ml-3 font-bold lg:text-lg">{{$t('refund.title')}}</h3>
+          <span
+            v-if="!isSelect"
+            class="leading-7 cursor-pointer text-[12px] text-gray-500"
+            @click="isSelect = true"
+          >
+          {{$t('refund.options')}} <icon-find-replace size="13" />
+          </span>
+          <span
+            v-else
+            class="leading-7 cursor-pointer text-gray-400"
+            @click="isSelect = false"
+            ><icon-close size="13"
+          /></span>
         </div>
-        <div class="ml-5 w-3/5 rounded-3xl">
-          <div class="flex text-lg rounded-tl-3xl bg-white tabs">
-            <div v-for="(tab, index) in tabs" :key="index" :class="`cursor-pointer bg-gray none-${selIndex}`">
-              <div :class="['p-5 pl-8 pr-8', { 'active': selIndex === index }]" @click="selIndex = index">
-                {{ tab }}
-              </div>
-            </div>
-            <div :class="`bg-gray-100 flex-1 ${selIndex === 2?'none-2':''}`"></div>
-          </div>
-          <div class="flex p-5 content-hide overflow-hidden bg-white rounded-bl-3xl rounded-br-3xl">
-            <customer-details v-if="selIndex === 0"/>
-            <customer-vip v-if="selIndex === 1"/>
-            <customer-recharge-history v-if="selIndex === 2"/>
+      </div>
+      <div v-if="!isSelect">
+        <div class="search-custom rounded-2xl overflow-hidden mr-4 ml-4 mt-2 mb-4">
+          <a-input-search
+            v-model="condition.keyword"
+            :placeholder="$t('refund.searchPlaceholder')"
+            size="large"
+            @search="getList"
+            search-button
+          />
+        </div>
+        <div
+          v-resize="200"
+          class="overflow-hidden overflow-y-auto"
+          v-if="orderList.length > 0"
+        >
+          <order-list-card
+            v-for="(item, index) in orderList"
+            :key="index"
+            :index="index"
+            :orderInfo="item"
+            :selected="selected"
+            @click="toShowDetails(item, index)"
+          />
+        </div>
+        <div class="flex items-center" v-resize="380" v-else>
+          <div class="w-3/5 m-auto text-center">
+            <img alt="" src="../../assets/images/no-order.png" />
+            <span class="text-gray-400 text-xs">{{ $t("noItems") }}</span>
           </div>
         </div>
       </div>
+      <!-- 筛选开始 -->
+      <order-select
+        v-else
+        :selcetOptions="selcetOptions"
+        @onFinish="onSearch"
+      />
+      <!--筛选结束 -->
     </div>
+    <div class="ml-5 flex-1 min-w-[500px] h-full rounded-2xl">
+      <tabs-menus :onChange="chooseTab" :menus="menus" :setIndex="setIndex" />
+      <div
+        :class="[
+          'content-hide overflow-hidden bg-white',
+          { 'rounded-2xl': setIndex > 0 },
+          { 'rounded-bl-2xl rounded-br-2xl rounded-tr-2xl': setIndex == 0 },
+        ]"
+      >
+        <div class="w-full bg-white" v-if="orderInfoData" v-resize="154">
+          <order-info
+            :orderInfo="orderInfoData"
+            v-if="setIndex == 0"
+          />
+          <order-details
+            v-if="setIndex === 1 && orderDetailsData.orderInfo"
+            :orderDetailsData="orderDetailsData"
+          />
+          <order-record
+            v-if="setIndex === 2"
+            :orderStuateList="orderStuateList"
+          />
+        </div>
+        <div class="flex items-center" v-resize="154" v-else>
+            <div class="w-3/5 m-auto text-center">
+              <img alt="" src="../../assets/images/no-record.png" />
+              <span class="text-gray-400 text-xs">{{ $t("noItems") }}</span>
+            </div>
+          </div>
+      </div>
+    </div>
+    <refund-marks :orderInfoData="orderInfoData" @onRefundMark="onRefundreMark" />
   </div>
 </template>
 
+<script setup>
+import { provide, reactive, ref } from "vue";
+import OrderDetails from "@/views/order/components/order-details.vue";
+import tabsMenus from "./components/tabs.vue";
+import orderInfo from "./components/order-info.vue";
+import orderRecord from "./components/order-record.vue";
+import orderListCard from "./components/order-list-card.vue";
+import orderSelect from "@/components/custom/Filters.vue";
+import refundMarks from "./components/refund-marks.vue";
+import { Message } from "@arco-design/web-vue";
+import { getRefundList, getOrderStatusList, getOrderRefundInfo,putRefundRemarkData } from "@/api/order";
+import { cashierList } from "@/api/user";
+const isSelect = ref(false);
+const setIndex = ref(0);
+const selected = ref(0);
+const orderInfoData = ref({});
+const menus = ["refund.info", "refund.details", "refund.record"];
+const orderList = ref([]);
+const orderStuateList = ref([]);
+const orderDetailsData = ref({});
+const isShowRefundMarkModal = ref(false);
+const selcetOptions = ref();
+const condition = reactive({
+  limit: 7,
+  page: 1,
+  keyword: "",
+  time: "",
+  refund_type: "",
+});
 
-<style scoped lang="less">
 
-.selected {
-  background: #f3f9ff;
+const chooseTab = async (index) => {
+  if(orderList.value.length == 0) {
+    return false
+  }
+  setIndex.value = index;
+  if (index == 1) {
+    await getOrderDetails();
+  }
+  if (index == 2) {
+    await getOrderStuatus();
+  }
+};
+
+const onSearch = (params) => {
+  if(params.key && params.value){
+    condition[params.key] = params.value;
+  }
+  if(params.isDone){
+    isSelect.value = false;
+    getList();
+  }
+};
+
+const getOrderDetails = async () => {
+  const { data } = await getOrderRefundInfo(orderInfoData.value.id);
+  orderDetailsData.value = data;
+};
+
+const getList = async () => {
+  orderList.value = [];
+  const { data } = await getRefundList(condition);
+  if (data.list.length > 0) {
+    orderList.value = data.list;
+    toShowDetails(data.list[0], 0);
+  }
+  data.conditions.forEach((item) => {
+      item.list.forEach((itemb, key) => {
+        if(key==0){
+          itemb.checked = true;
+        }else{
+          itemb.checked = false;
+        }
+      });
+  });
+  selcetOptions.value = data.conditions;
+};
+
+const getOrderStuatus = async () => {
+  const { data } = await getOrderStatusList(orderInfoData.value.id);
+  orderStuateList.value = data;
+};
+const toShowDetails = (item, index) => {
+  selected.value = index;
+  setIndex.value = 0;
+  orderInfoData.value = item;
+};
+const onRefundreMark = (content)=>{
+  if(content==''){
+    Message.error(res.msg)
+  }
+  putRefundRemarkData(orderInfoData.value.id,{remark:content}).then(res=>{
+    orderInfoData.value.remark=content;
+    isShowRefundMarkModal.value=false;
+    Message.success(res.msg)
+  });
 }
+getList();
+provide('isShowRefundMarkModal',isShowRefundMarkModal);
+</script>
 
-.content-hide {
-  height: calc(100vh - 195px);
-}
-
-.tabs {
-  .bg-gray {
-    background-color: #f2f3f5;
-  }
-
-  .none-0:nth-child(1) {
-    border-bottom-right-radius: 18px;
-  }
-
-  .none-0:nth-child(2) {
-    border-bottom-left-radius: 18px;
-  }
-
-  .none-1:nth-child(1) {
-    border-bottom-right-radius: 18px;
-  }
-
-  .none-1:nth-child(3) {
-    border-bottom-left-radius: 18px;
-  }
-
-  .none-2:nth-child(2) {
-    border-bottom-right-radius: 18px;
-  }
-
-  .none-2:nth-child(4) {
-    border-bottom-left-radius: 18px;
-  }
-
-  .active {
-    /* 选中状态的样式 */
-    border-top-left-radius: 18px;
-    border-top-right-radius: 18px;
-    background-color: #FFFFFF;
-    font-weight: bold;
-  }
-}
-
-
-</style>
+<style scoped lang="less"></style>

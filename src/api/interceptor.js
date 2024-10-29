@@ -27,6 +27,7 @@ axios.interceptors.request.use(
         config.headers = {};
       }
       config.headers['Authori-zation'] = `Bearer ${token}`;
+      config.headers['Accept-Language'] = localStorage.getItem('arco-locale');
     }
     return config;
   },
@@ -65,8 +66,9 @@ axios.interceptors.response.use(
     return res;
   },
   (error) => {
+    const {response} = error
     Message.error({
-      content: error.msg || 'Request Error',
+      content: response.data.message || 'Request Error',
       duration: 5 * 1000,
     });
     return Promise.reject(error);

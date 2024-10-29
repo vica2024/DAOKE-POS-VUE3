@@ -388,11 +388,23 @@ export function putRemarkData(data) {
  * @param {Number} param data.id {Number} 订单id
  * @param {String} param data.remark {String} 备注信息
  */
-export function putRefundRemarkData(data) {
+export function putRefundRemarkData(id,remark) {
     return axios({
-        url: `order/refund/remark/${data.id}`,
+        url: `order/refund/remark/${id}`,
         method: 'put',
-        data: data.remark
+        data: remark
+    });
+};
+/**
+ * @description 订单退款
+ * @param {Number} param data.id {Number} 订单id
+ * @param {String} param data.remark {String} 备注信息
+ */
+export function postRefundOrder(id,data) {
+    return axios({
+        url: `order/refund/${id}`,
+        method: 'post',
+        data
     });
 };
 
@@ -594,9 +606,9 @@ export function postCashierHang(data) {
 /**
  * @description 收银台-收银台获取挂单列表分页
  */
-export function getHangList(id, data) {
+export function getHangList(cashier_id, data) {
     return axios({
-        url: `order/get_hang_list/${id}`,
+        url: `order/get_hang_list/${cashier_id}`,
         method: 'get',
         params: data
     });

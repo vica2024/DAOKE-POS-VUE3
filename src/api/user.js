@@ -99,16 +99,7 @@ export function userListApi(data) {
     params: data
   });
 }
-/**
- *用户-当前门店店员列表和店员信息
- */
-export function cashierList(data) {
-  return axios({
-    url: `user/cashier_list`,
-    method: 'get',
-    params: data
-  });
-}
+
 
 
 /**
@@ -151,18 +142,6 @@ export function detailsApi(id) {
   return axios({
     url: `user/info/${id}`,
     method: 'get'
-  });
-}
-
-
-/**
- *用户-用户列表-详情中tab选项
- */
-export function infoApi(data) {
-  return axios({
-    url: `user/record/${data.id}`,
-    method: 'get',
-    params: data.datas
   });
 }
 
@@ -268,12 +247,13 @@ export function staffInfoApi() {
 }
 
 /**
- *收银台-获取用户详情
+ *用户-当前门店店员列表和店员信息
  */
-// export function getUserInfoV2(uid) {
-//   return axios({
-//     url: `user/info/${uid}`,
-//     method: 'get',
-//   });
-// }
+ export function cashierList(data) {
+  return axios({
+    url: `user/cashier_list`,
+    method: 'get',
+    params: data
+  });
+}
 

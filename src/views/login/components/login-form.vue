@@ -1,7 +1,6 @@
 <template>
   <div class="login-form-wrapper">
-    <div class="login-form-title">{{ appStore.projectName }}</div>
-    <div class="login-form-sub-title">{{ $t('login.form.title') }} {{ appStore.projectName }}</div>
+    <div class="login-form-sub-title">{{ $t('login.form.title') }}</div>
     <div class="login-form-error-msg">{{ errorMessage }}</div>
     <a-form
       ref="loginForm"
@@ -18,6 +17,7 @@
       >
         <a-input
           v-model="userInfo.username"
+          class="pt-1 pb-1 rounded-2xl"
           :placeholder="$t('login.form.userName.placeholder')"
         >
           <template #prefix>
@@ -33,6 +33,7 @@
       >
         <a-input-password
           v-model="userInfo.password"
+          class="pt-1 pb-1 rounded-2xl"
           :placeholder="$t('login.form.password.placeholder')"
           allow-clear
         >
@@ -89,7 +90,7 @@
 
   const loginConfig = useStorage('login-config', {
     rememberPassword: true,
-    username: 'cn001', // 演示默认值
+    username: 'admin001', // 演示默认值
     password: '123456', // demo default value
   });
   const userInfo = reactive({
@@ -107,21 +108,15 @@
       setLoading(true);
       try {
         await userStore.login(values);
-
         const { redirect, ...othersQuery } = router.currentRoute.value.query;
         router.push({
-          name: redirect || 'Workplace',
+          name: redirect || 'menu.cashier',
           query: {
             ...othersQuery,
           },
+          replace: true,
         });
         Message.success(t('login.form.login.success'));
-        const { rememberPassword } = loginConfig.value;
-        const { username, password } = values;
-        // 实际生产环境需要进行加密存储。
-        // The actual production environment requires encrypted storage.
-        loginConfig.value.username = rememberPassword ? username : '';
-        loginConfig.value.password = rememberPassword ? password : '';
       } catch (err) {
         errorMessage.value = (err).message;
       } finally {

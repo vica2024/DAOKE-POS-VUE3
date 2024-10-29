@@ -19,8 +19,9 @@ export default defineConfig({
     port: 6100,
     proxy: {
       '/devApi': {
-        target: 'http://localhost:3000',
+        target: 'http://localhost:8000',
         changeOrigin: true,
+        ws: true,
         rewrite: (path) => path.replace(/^\/devApi/, ''),
       }
     },

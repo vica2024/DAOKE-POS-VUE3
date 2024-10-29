@@ -61,6 +61,14 @@ export function cashierGetAttr(id, uid) {
     });
 }
 
+export function cashierProductV2(data)
+{
+    return axios({
+        url: `product/v2/get_list`,
+        method: 'get',
+        params: data
+    });
+}
 
 
 

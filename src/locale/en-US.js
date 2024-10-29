@@ -8,16 +8,26 @@ import localeSettings from "./en-US/settings";
 //for cashier language
 import localeCashier from "@/views/cashier/locale/en-US.js";
 
-//for customer land
-import localeCustomer from "@/views/customer/locale/en-US.js";
+//for pending language
+import localePending from "@/views/pending/locale/en-US.js";
+
+//for order language
+import localeOrder from "@/views/order/locale/en-US.js";
+
+//for write-off language
+import localeWriteOff from "@/views/write-off/locale/en-US.js";
+
+//for refund language
+import localeRefund from "@/views/refund/locale/en-US.js";
 
 export default {
+	"user.admin": "Admin",
+	"user.cashier": "Cashier",
 	"menu.cashier": "Sales",
 	"menu.refund": "Refund",
-	"menu.deposit": "Dep.",
-	"menu.redeem-coupon": "CR",
+	"menu.pendingOrder": "Pending",
+	"menu.redeem-coupon": "Write-Off",
 	"menu.order": "Order",
-	"menu.customer": "CRM",
 	"menu.dashboard": "Dashboard",
 	"menu.server.dashboard": "Dashboard-Server",
 	"menu.server.workplace": "Workplace-Server",
@@ -37,10 +47,13 @@ export default {
 	"modal.title.edit": "Edit",
 	"modal.title.view": "View",
 	"modal.footer.cancel": "Cancel",
+	"modal.footer.confirm": "Confirm",
 	"modal.footer.ok": "Ok",
 	"modal.footer.save": "Save",
+	"modal.footer.reset": "Reset",
 	"modal.footer.create": "Create",
 	"modal.footer.delete": "Delete",
+	"modal.footer.search":"Search",
 
 	"message.success.add": "Add Succeeded",
 	"message.success.edit": "Edit Succeeded",
@@ -51,6 +64,7 @@ export default {
 	"message.error.delete": "Delete Error",
 	"message.error.operations": "Action Failed",
 
+
 	"placeholder.prefix":"Please enter ",
 
 	...localeSettings,
@@ -60,5 +74,8 @@ export default {
 	...locale404,
 	...locale500,
 	...localeCashier,
-	...localeCustomer
+	...localePending,
+	...localeOrder,
+	...localeWriteOff,
+	...localeRefund
 };

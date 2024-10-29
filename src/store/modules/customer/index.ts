@@ -1,37 +1,69 @@
 // src/stores/customerStore.ts
 import { defineStore } from 'pinia';
-
+import { useStorage } from '@vueuse/core';
+const customerStorage = useStorage('customer-info',{});
+const deafultAvatar = 'https://multi-store.crmeb.net/view_cashier/img/yonghu.908b01d3.png';
 export interface CustomerState {
-  phone: string;
-  avatar: string;
-  nickname: string;
-  now_money: number;
-  integral: number;
+  uid:number,
+  phone: string,
+  avatar: string,
+  full_name: string,
+  balance: number,
+  integral: number,
+  tourist_uid:number
 }
 
-export const useCustomerStore = defineStore('customer', {
+const useCustomerStore = defineStore('customer', {
   state: (): CustomerState => ({
+    uid:0,
     phone: '',
-    avatar: '',
-    nickname: '',
-    now_money: 0,
+    avatar: deafultAvatar,
+    full_name: 'temporayCustomer',
+    balance: 0.00,
     integral: 0,
+    tourist_uid:0
   }),
   actions: {
-    updatePhone(newPhone: string) {
-      this.phone = newPhone;
+    updateCustomerInfo(customer: CustomerState) {
+      this.uid = customer.uid??0;
+      this.phone = customer.phone??'';
+      this.avatar = customer.avatar??deafultAvatar;
+      this.full_name = customer.full_name??'temporayCustomer';
+      this.balance = customer.balance??0.00;
+      this.integral = customer.integral??0;
+      if(customerStorage.value){
+        customerStorage.value = {
+          uid:customer.uid,
+          phone: customer.phone,
+          avatar: customer.avatar,
+          full_name: customer.full_name,
+          balance: customer.balance,
+          integral:customer.integral,
+        }
+      }else{
+        useStorage('customer-info', customer);
+      }
     },
-    updateAvatar(newAvatar: string) {
-      this.avatar = newAvatar;
+    updateTouristUid(customer: CustomerState) {
+      this.tourist_uid = customer.tourist_uid;
     },
-    updateNickname(newNickname: string) {
-      this.nickname = newNickname;
-    },
-    updateNowMoney(newNowMoney: number) {
-      this.now_money = newNowMoney;
-    },
-    updateIntegral(newIntegral: number) {
-      this.integral = newIntegral;
-    },
+    resetState() {
+      this.uid = 0;
+      this.phone = '';
+      this.avatar = deafultAvatar;
+      this.full_name = 'temporayCustomer';
+      this.balance = 0;
+      this.integral = 0;
+      customerStorage.value = {
+        uid:0,
+        phone: '',
+        avatar: deafultAvatar,
+        full_name: 'temporayCustomer',
+        balance: 0.00,
+        integral: 0,
+      }
+
+    }
   },
 });
+export default useCustomerStore;

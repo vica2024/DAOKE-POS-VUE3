@@ -14,7 +14,7 @@ import axios from 'axios';
 // export type MessageListType = MessageRecord[];
 
 export function queryMessageList() {
-  return axios.post('/api/message/list');
+  return axios.post('message/list');
 }
 
 // interface MessageStatus {
@@ -22,7 +22,7 @@ export function queryMessageList() {
 // }
 
 export function setMessageStatus(data) {
-  return axios.post('/api/message/read', data);
+  return axios.post('message/read', data);
 }
 
 // export interface ChatRecord {

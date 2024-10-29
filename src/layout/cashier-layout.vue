@@ -141,10 +141,6 @@
         background-clip: padding-box;
         border-radius: 7px;
       }
-
-      ::-webkit-scrollbar-thumb:hover {
-  ;
-      }
     }
   }
 
@@ -170,7 +166,7 @@
         .layout-main {
           grid-area: main;
           overflow: hidden;
-          margin-top: 20px;
+          padding: 15px;
         }
         .layout-footer {
           grid-area: footer;

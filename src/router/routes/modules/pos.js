@@ -3,7 +3,7 @@ import { DEFAULT_LAYOUT } from '../base';
 
 export default {
   path: '/',
-  name: '',
+  name: 'home',
   component: DEFAULT_LAYOUT,
   meta: {
     locale: 'menu.profile',
@@ -20,18 +20,18 @@ export default {
         locale: 'menu.cashier',
         icon: 'icon-gift',
         requiresAuth: true,
-        roles: ['admin'],
+        roles: ['admin','cashier'],
       },
     },
     {
-      path: 'deposit',
-      name: 'menu.deposit',
-      component: () => import('@/views/deposit/index.vue'),
+      path: 'pending-order',
+      name: 'menu.pendingOrder',
+      component: () => import('@/views/pending/index.vue'),
       meta: {
-        locale: 'menu.deposit',
+        locale: 'menu.pendingOrder',
         icon: 'icon-drive-file',
         requiresAuth: true,
-        roles: ['admin'],
+        roles: ['admin','cashier'],
       },
     },
     {
@@ -42,7 +42,7 @@ export default {
         locale: 'menu.order',
         icon: 'icon-bookmark',
         requiresAuth: true,
-        roles: ['admin'],
+        roles: ['admin','cashier'],
       },
     },
     {
@@ -53,7 +53,7 @@ export default {
         locale: 'menu.redeem-coupon',
         icon: 'icon-check-square',
         requiresAuth: true,
-        roles: ['admin'],
+        roles: ['admin','cashier'],
       },
     },
     {
@@ -64,20 +64,9 @@ export default {
         locale: 'menu.refund',
         icon: 'icon-rotate-left',
         requiresAuth: true,
-        roles: ['admin'],
+        roles: ['admin','cashier'],
       },
-    },
-    {
-      path: '/customer',
-      name: 'menu.customer',
-      component: () => import('@/views/customer/index.vue'),
-      meta: {
-        locale: 'menu.customer',
-        icon: 'icon-user-group',
-        requiresAuth: true,
-        roles: ['admin'],
-      },
-    },
+    }
   ],
 };
 

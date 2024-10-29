@@ -1,32 +1,21 @@
 import { defineStore } from 'pinia';
 import {
   login as userLogin,
-  logout as userLogout,
-  getUserInfo,
+  logout as userLogout
   // LoginData,
 } from '@/api/user.js';
-import { setToken, clearToken } from '@/utils/auth.js';
+import { getStoreInfo } from '@/api/store.js';
+import { setToken, clearToken, setRole,clearRole } from '@/utils/auth.js';
 import { removeRouteListener } from '@/utils/route-listener.js';
 // import { UserState } from './types';
 import useAppStore from '../app';
 
 const useUserStore = defineStore('user', {
   state: () => ({
-    name: undefined,
-    avatar: undefined,
-    job: undefined,
-    organization: undefined,
-    location: undefined,
-    email: undefined,
-    introduction: undefined,
-    personalWebsite: undefined,
-    jobName: undefined,
-    organizationName: undefined,
-    locationName: undefined,
-    phone: undefined,
-    registrationDate: undefined,
-    accountId: undefined,
-    certification: undefined,
+    store_id: undefined,
+    store_name: undefined,
+    store_logo: undefined,
+    currency:'¥',
     role: '',
   }),
 
@@ -43,30 +32,27 @@ const useUserStore = defineStore('user', {
         resolve(this.role);
       });
     },
-    // Set user's information
-    setInfo(partial) {
-      this.$patch(partial);
-    },
-
     // Reset user's information
     resetInfo() {
       this.$reset();
+      clearRole();
     },
-
     // Get user's information
-    async info() {
-      const res = await getUserInfo();
-
-      this.setInfo(res.data);
+    async getInfo() {
+      const {data} = await getStoreInfo();
+      setRole(data.role);
+      this.store_id = data.store_id;
+      this.store_name = data.store_name;
+      this.store_logo = data.store_logo;
+      this.currency = data.currency;
+      this.role = data.role;
     },
 
     // Login
     async login(loginForm) {
       try {
-        const res = await userLogin(loginForm);
-        console.log(res)
-        setToken(res.data.token);
-        window.localStorage.setItem('userRole', 'admin');
+        const {data} = await userLogin(loginForm);
+        setToken(data.token);
       } catch (err) {
         clearToken();
         throw err;

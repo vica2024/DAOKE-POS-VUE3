@@ -1,0 +1,20 @@
+export default {
+    'login.form.title': 'ログイン',
+    'login.form.userName.errMsg': 'ユーザー名は空にできません',
+    'login.form.password.errMsg': 'パスワードは空にできません',
+    'login.form.login.errMsg': 'ログインエラー、リフレッシュして再試行してください',
+    'login.form.login.success': 'ようこそ',
+    'login.form.userName.placeholder': 'ユーザー名：admin',
+    'login.form.password.placeholder': 'パスワード：admin',
+    'login.form.rememberPassword': 'パスワードを記憶する',
+    'login.form.forgetPassword': 'パスワードを忘れた',
+    'login.form.login': 'ログイン',
+    'login.form.register': 'アカウントを登録',
+    'login.banner.slogan1': 'すぐに使える高品質なテンプレート',
+    'login.banner.subSlogan1': '豊富なページテンプレート、ほとんどの典型的なビジネスシーンをカバー',
+    'login.banner.slogan2': '一般的な問題の解決策を内蔵',
+    'login.banner.subSlogan2': '国際化、ルーティング設定、状態管理がすべて揃っています',
+    'login.banner.slogan3': '可視化強化ツールAUXを接続',
+    'login.banner.subSlogan3': '柔軟なブロック型開発を実現',
+  };
+  
