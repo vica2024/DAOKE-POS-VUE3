@@ -1,0 +1,43 @@
+name: Deploy to Ubuntu Server
+
+on:
+  push:
+    branches:
+      - master  # 或者你希望自动部署的其他分支
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'  # 根据需要设置 Node.js 版本
+
+      - name: Install dependencies
+        run: yarn install  # 使用 Yarn 安装依赖
+
+      - name: Build application
+        run: yarn build  # 使用 Yarn 构建 Vite 项目
+
+      - name: Package application
+        run: |
+          zip -r pos-app.zip dist/*  # 将构建后的文件打包
+
+      - name: Copy files to server
+        uses: appleboy/scp-action@v0.1.0
+        with:
+          host: ${{ secrets.SERVER_IP }}  # 服务器 IP
+          username: ${{ secrets.SERVER_USER }}  # 服务器用户名
+          key: ${{ secrets.SSH_PRIVATE_KEY }}  # SSH 私钥
+          port: ${{ secrets.SSH_PORT }}  # SSH 端口
+          source: "pos-app.zip"  # 源文件
+          target: ${{ secrets.DEPLOY_PATH }}  # 目标目录
+
+      - name: Unzip and deploy on server
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "unzip -o ${{ secrets.DEPLOY_PATH }}/pos-app.zip -d ${{ secrets.DEPLOY_PATH }}/pos-app && mv ${{ secrets.DEPLOY_PATH }}/pos ${{ secrets.DEPLOY_PATH }}/pos-\$(date +\%Y\%m\%d\%H\%M) && mv ${{ secrets.DEPLOY_PATH }}/pos-app ${{ secrets.DEPLOY_PATH }}/pos"  # 根据需要调整命令
