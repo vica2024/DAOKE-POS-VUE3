@@ -5,7 +5,7 @@
 <p align="center"> 
 <a href="" target="_blank">Home</a> | 
 <a href="" target="_blank">Documentation</a> | 
-<a href="" target="_blank">Demo</a> | 
+<a href="https://pos.vicazhuo.tech" target="_blank">Demo</a> | 
 <a href="https://arco.design" target="_blank">Arco Design Official Documentation</a> 
 </p>
 
