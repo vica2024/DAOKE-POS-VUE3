@@ -7,7 +7,7 @@
 <p align="center"> 
 <a href="" target="_blank">ホーム</a> | 
 <a href="" target="_blank">ドキュメント</a> | 
-<a href="" target="_blank">デモ</a> | 
+<a href="https://pos.vicazhuo.tech" target="_blank">デモ</a> | 
 <a href="https://arco.design" target="_blank">Arco Design公式ドキュメント</a> 
 </p>
 
