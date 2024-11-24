@@ -7,7 +7,7 @@
 <p align="center">
     <a href="" target="_blank">主页</a> |
     <a href="" target="_blank">文档</a> | 
-    <a href="" target="_blank">演示</a> |
+    <a href="https://pos.vicazhuo.tech" target="_blank">演示</a> |
     <a href="https://arco.design" target="_blank">Arco Design官方文档</a> 
 </p>
 
