@@ -15,15 +15,15 @@ export function login(data) {
 }
 
 export function logout() {
-  return axios.post('/api/user/logout');
+  return axios.get('/logout');
 }
 
 export function getUserInfo() {
-  return axios.post('/api/user/info');
+  return axios.post('/user/info');
 }
 
 export function getMenuList() {
-  return axios.post('/api/user/menu');
+  return axios.post('/user/menu');
 }
 // 用户标签
 /**

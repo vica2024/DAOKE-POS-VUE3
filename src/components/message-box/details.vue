@@ -61,6 +61,9 @@ const onChange = (e) => {
 const getMessageList = () => {
   queryMessageList().then((res) => {
     data = res.data;
+    if(data.length<1){
+       return false;
+    }
     onChange(active.value)
   });
 }

@@ -1,19 +1,17 @@
 import { resolve } from 'path';
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-// import eslint from 'vite-plugin-eslint';
+import { defineConfig } from 'vite';
 import vueJsx from '@vitejs/plugin-vue-jsx';
-import { vitePluginForArco } from '@arco-plugins/vite-vue'
+import vue from '@vitejs/plugin-vue';
+import { vitePluginForArco } from '@arco-plugins/vite-vue';
 import configCompressPlugin from './plugin/compress';
 import configVisualizerPlugin from './plugin/visualizer';
-// import configArcoResolverPlugin from './plugin/arcoResolver';
-// import configImageminPlugin from './plugin/imagemin';
+import { version } from './package.json';
 
-// const isDevelopment = import.meta.env.MODE === 'development'
-
-// https://vitejs.dev/config/
 export default defineConfig({
-  // mode: 'development',
+  define: {
+    'import.meta.env.VITE_APP_VERSION': JSON.stringify(version), // 将版本号添加到环境变量
+  },
+  //mode: 'development',
   server: {
     host: '0.0.0.0',
     port: 6100,
@@ -33,17 +31,14 @@ export default defineConfig({
     vitePluginForArco({
       style: 'css'
     }),
-    // isDevelopment ? eslint({
-    //   cache: false,
-    //   include: ['src/**/*.js', 'src/**/*.jsx', 'src/**/*.vue'],
-    //   exclude: ['node_modules'],
-    // }) : null,
-
     configCompressPlugin('gzip'),
     configVisualizerPlugin(),
-    // configArcoResolverPlugin(),
-    // configImageminPlugin(),
-],
+  ],
+  test: {
+    globals: true, // 启用全局测试 API（如 describe、it 等）
+    environment: 'jsdom', // 使用 jsdom 模拟 DOM 环境
+    setupFiles: './setupTests.js', // 初始化文件路径
+  },
   resolve: {
     alias: [
       {

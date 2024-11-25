@@ -13,12 +13,7 @@ export default class NotificationService {
 
   // 连接到服务器
   connect() {
-    let hostUrl = 'ws://127.0.0.1:8000/ws';
-    if (import.meta.env.VITE_SOCKET_SERVER_URL) {
-      hostUrl = import.meta.env.VITE_SOCKET_SERVER_URL;
-    }
-    const wsUrl = `${hostUrl}?type=store&token=${localStorage.getItem("token")}`;
-    
+    const wsUrl = `${import.meta.env.VITE_SOCKET_SERVER_URL}?type=store&token=${localStorage.getItem("token")}`;
     this.ws = new WebSocket(wsUrl);
     this.ws.onopen = this.onOpen.bind(this);
     this.ws.onerror = this.onError.bind(this);

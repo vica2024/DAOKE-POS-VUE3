@@ -22,6 +22,7 @@ import localeWriteOff from "@/views/write-off/locale/zh-CN.js";
 import localeRefund from "@/views/refund/locale/zh-CN.js";
 
 export default {
+	"conect.author":"联系作者",
 	"user.admin": "管理员",
 	"user.cashier": "收银员",
 	"menu.cashier": "销售",

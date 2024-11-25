@@ -14,7 +14,7 @@ import axios from 'axios';
 // export type MessageListType = MessageRecord[];
 
 export function queryMessageList() {
-  return axios.post('message/list');
+  return axios.get('message/list');
 }
 
 // interface MessageStatus {

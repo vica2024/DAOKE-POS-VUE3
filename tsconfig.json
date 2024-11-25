@@ -20,7 +20,7 @@
     "src/**/*.tsx", 
     "src/**/*.vue", 
     "src/**/*.js"
-  ],
+, "setupTests.js"  ],
   "exclude": [
     "node_modules"
   ]

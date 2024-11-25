@@ -8,6 +8,7 @@ import locale500 from "@/views/exception/500/locale/ja-JP";
 import localeCashier from "@/views/cashier/locale/ja-JP.js";
 
 export default {
+	"conect.author":"关联作者",
 	"user.admin": "管理者",
 	"user.cashier": "レジ係",
 	"menu.cashier": "販売",

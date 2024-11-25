@@ -22,7 +22,7 @@
 </template>
 <script setup>
 import CustomAmonuts from "@/components/custom/Amonut.vue";
-import { defineProps, provide, reactive,inject } from "vue";
+import {  provide, reactive,inject } from "vue";
 import ModalCashierList from "../modals/cashier-list.vue";
 const drawerState = inject("drawerState");
 const props = defineProps({

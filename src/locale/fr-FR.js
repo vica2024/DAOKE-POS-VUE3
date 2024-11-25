@@ -1,4 +1,5 @@
 export default {
+    "conect.author":"Connect Author",
     "user.admin": "Administrateur",
     "user.cashier": "Caissier",
     "menu.cashier": "Vente",

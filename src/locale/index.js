@@ -13,7 +13,8 @@ export const LOCALE_OPTIONS = [
   { label: 'English', value: 'en-US' },
   { label: 'Français', value: 'fr-FR' },
 ];
-const defaultLocale = localStorage.getItem('arco-locale') || 'zh-CN';
+const userLanguage = navigator.language || navigator.userLanguage;
+const defaultLocale = localStorage.getItem('arco-locale') || userLanguage;
 
 const i18n = createI18n({
   locale: defaultLocale,

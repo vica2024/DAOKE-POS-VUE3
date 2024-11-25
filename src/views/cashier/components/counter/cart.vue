@@ -79,10 +79,18 @@ watch(
       addCart();
     }
     if (newOperateState==2) {
-      ChangeCartNum();
-    }
-    if (newOperateState==3) {
-      modifyCartSku();
+      let isChange = false;
+      if(modalState.productAttr.new_cart_num != modalState.productAttr.cart_num){
+        isChange = true;
+        ChangeCartNum(modalState.productAttr.new_cart_num);
+      }
+      if(modalState.productAttr.new_uniqueId != modalState.productAttr.uniqueId){
+        isChange = true;
+        modifyCartSku();
+      }
+      if(!isChange){
+        modalState.productAttr.show = false;
+      }
     }
     //this one is very important never never never don't remove otherwise will to unceasinf create cart order a lot;
     resetAttrs();
@@ -115,16 +123,19 @@ const addCart = () => {
     seckillId: 0,
     cartId: attrs.cart_id,
     staff_id: cashierInfo.id,
-    cartNum: attrs.cart_num,
+    cartNum: attrs.new_cart_num?attrs.new_cart_num:attrs.cart_num,
     productId: attrs.product_id,
-    uniqueId: attrs.uniqueId,
+    uniqueId: attrs.new_uniqueId?attrs.new_uniqueId:attrs.uniqueId,
   };
+  console.log(params,attrs);
+  
   if (customerInfo.uid === 0) {
     params.tourist_uid = customerInfo.tourist_uid;
   }
   fetchData(
     () => cashierCart(customerInfo.uid, params),
     (data, msg) => {
+      modalState.productAttr.show = false;
       if (data.cartId) {
       !cartInfo.ids.includes(data.cartId)
         ? cartInfo.ids.push(data.cartId)
@@ -173,23 +184,26 @@ const modifyCartSku = () => {
       cashierchangeCart({
         cart_id: attrs.cart_id,
         product_id: attrs.product_id,
-        unique: attrs.uniqueId,
+        unique: attrs.new_uniqueId,
+        number: attrs.new_cart_num?attrs.new_cart_num:attrs.cart_num,
       }),
     (res) => {
+      modalState.productAttr.show = false;
       fetchCashierCartList();
     }
   );
 };
 
-const ChangeCartNum = () => {
+const ChangeCartNum = (num) => {
   const attrs = modalState.productAttr;
   fetchData(
     () =>
       cashierCartNum(customerInfo.uid, {
         id: attrs.cart_id,
-        number: attrs.cart_num,
+        number:num,
       }),
     (data) => {
+      modalState.productAttr.show = false;
       fetchCashierCartList();
     }
   );

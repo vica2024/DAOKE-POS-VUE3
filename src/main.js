@@ -13,7 +13,7 @@ import '@/api/interceptor';
 import '@arco-themes/vue-diamond-web3-pos/index.less';
 import '@/assets/style/index.css';
 const IconFont = ArcoVue.Icon.addFromIconFontCn({ src: '//at.alicdn.com/t/c/font_4700879_0a2o7c1yg41m.js' });
-
+// add global components
 const app = createApp(App);
 app.component('IconFont', IconFont);
 app.use(ArcoVue, {});

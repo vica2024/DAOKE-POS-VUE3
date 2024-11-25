@@ -38,6 +38,7 @@ const setAttr = (product) => {
   modalState.productAttr.product_id = product.id;
   modalState.productAttr.cart_id =[];
   modalState.productAttr.defaultSku = null;
+  modalState.productAttr.cart_num = 1;
   modalState.productAttr.show = true;
 };
 </script>

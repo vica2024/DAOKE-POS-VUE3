@@ -23,7 +23,7 @@
   import LoginBanner from './components/banner.vue';
   import LoginForm from './components/login-form.vue';
   import { useAppStore } from '@/store';
-  const appStore = useAppStore();
+  const appStore = useAppStore(); 
 </script>
 
 <style lang="less" scoped>

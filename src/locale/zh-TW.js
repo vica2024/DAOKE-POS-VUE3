@@ -1,4 +1,5 @@
 export default {
+    
     "user.admin": "管理員",
     "user.cashier": "收銀員",
     "menu.cashier": "銷售",

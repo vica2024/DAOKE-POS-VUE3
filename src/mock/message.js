@@ -9,7 +9,7 @@ const today = new Date().toLocaleDateString('zh-CN', { // 获取今天的日期
 setupMock({
     setup() {
         // Quality Inspection
-        Mock.mock(new RegExp('/message/list'), () => {
+        Mock.mock(new RegExp('/message/sslist'), () => {
             return successResponseWrap([
                 {
                     type: 'message',

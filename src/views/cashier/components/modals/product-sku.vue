@@ -108,7 +108,7 @@ const setSku = (defaultSku) => {
   pickUpAttr.stock = stock;
   pickUpAttr.price = price;
   pickUpAttr.image = image;
-  modalState.productAttr.uniqueId = unique;
+  modalState.productAttr.new_uniqueId = unique;
 };
 
 const pickupSku = (key, sku_name) => {
@@ -116,22 +116,15 @@ const pickupSku = (key, sku_name) => {
   setSku(modalState.productAttr.defaultSku);
 };
 
-const ChangeCartNum = () => {
-  modalState.productAttr.cart_num = productAttrs.cart_num;
-  if (modalState.productAttr.cart_id > 0) {
-    modalState.productAttr.operateState = 2;
-  }
-};
-
 /**
  * 完成当前商品属性选择
  */
 const donePickUp = () => {
-  modalState.productAttr.show = false;
+  modalState.productAttr.new_cart_num = productAttrs.cart_num;
   if (modalState.productAttr.cart_id == 0) {
     modalState.productAttr.operateState = 1;
-  } else {
-    modalState.productAttr.operateState = 3;
+  }else{
+    modalState.productAttr.operateState = 2;
   }
 };
 </script>
@@ -163,15 +156,14 @@ const donePickUp = () => {
             <p class="text-xs mb-1">
               {{ $t("stock_count") }} &nbsp;{{ pickUpAttr.stock }}
             </p>
-            <div class="text-xs mb-1">
+            <div class="text-xs mb-1 cart_num">
               {{ $t("purchase_count") }}
               <a-input-number
                 v-model="productAttrs.cart_num"
                 size="mini"
                 mode="button"
                 :min="1"
-                @change="ChangeCartNum"
-                style="width: 110px; border-radius: 14px; text-align: center"
+                style="width: 110px; border-radius: 14px;"
               />
             </div>
           </div>
@@ -211,4 +203,5 @@ const donePickUp = () => {
     </div>
   </a-modal>
 </template>
-<style scoped lang="less"></style>
+<style scoped lang="less">
+</style>

@@ -7,7 +7,7 @@
         <span>联系</span> -->
       </div>
     </div>
-    <p class="text-gray-400">Copyright © {{ appStore.appName }} {{ new Date().getFullYear() }}</p>
+    <p class="text-gray-400">Copyright © {{ appStore.appName }} {{ new Date().getFullYear() }} ｜ <a href="mailto:vicazhuo@gmail.com"><span class="text-blue-400"><icon-email size="14" />{{ $t('conect.author') }}</span></a></p>
  </a-layout-footer>
 </template>
 

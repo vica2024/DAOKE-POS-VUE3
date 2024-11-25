@@ -21,6 +21,7 @@ import localeWriteOff from "@/views/write-off/locale/en-US.js";
 import localeRefund from "@/views/refund/locale/en-US.js";
 
 export default {
+	"conect.author":"Connect Author",
 	"user.admin": "Admin",
 	"user.cashier": "Cashier",
 	"menu.cashier": "Sales",
