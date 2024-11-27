@@ -1,6 +1,6 @@
 <template>
   <div class="h-full flex-1">
-    <serving-v2 :customerInfo="customerInfo" :setNewCustomer="setNewCustomer" />
+    <serving-v2 :customerInfo="customerInfo" />
     <cart-list
       :total_price="cartInfo.total_price"
       :isUnPayment="isUnPayment"
@@ -14,7 +14,7 @@
   </div>
 </template>
 <script setup>
-import { provide, ref, inject, reactive, watch } from "vue";
+import { provide, ref, inject, reactive, watch} from "vue";
 import servingV2 from "./serving-v2.vue";
 import cartList from "./cart-list.vue";
 import { fetchData } from "@/utils/customFunc.js";
@@ -59,47 +59,55 @@ const cartInfo = reactive({
 
 watch(
   [
-    () => cartInfo.count,
-    () => customerInfo.uid,
+    ()=>customerInfo.uid,
+    ()=>cartInfo.count,
     () => modalState.productAttr.operateState,
   ],
   (
     [
+      newUid,
       newCount,
-      newCustomerId,
       newOperateState,
     ],
-    [oldCount, oldCustomerId, oldOperateState,]
+    [oldUid,oldCount,oldOperateState]
   ) => {
-    toolsButtons[0].disabled = customerInfo.uid == 0;
-    toolsButtons[1].disabled = !cartInfo.count > 0;
-    toolsButtons[2].disabled = customerInfo.uid == 0;
-    toolsButtons[5].disabled = !cartInfo.count > 0;
+
+    toolsButtons[2].disabled = toolsButtons[0].disabled = newUid == 0;
+    toolsButtons[5].disabled = toolsButtons[1].disabled = !newCount > 0;
+
+    //The customer's info has been changed.
+    if(newUid!=oldUid){
+       switchCustomer(newUid);
+    }
+    //To added a goods in the cart.
     if (newOperateState==1) {
       addCart();
     }
+    //To changed sku or quality for one of the item.
     if (newOperateState==2) {
       let isChange = false;
-      if(modalState.productAttr.new_cart_num != modalState.productAttr.cart_num){
+      if(modalState.productAttr.new_cart_num && modalState.productAttr.new_cart_num != modalState.productAttr.cart_num){
         isChange = true;
         ChangeCartNum(modalState.productAttr.new_cart_num);
       }
-      if(modalState.productAttr.new_uniqueId != modalState.productAttr.uniqueId){
+      if(modalState.productAttr.new_uniqueId && modalState.productAttr.new_uniqueId != modalState.productAttr.uniqueId){
         isChange = true;
         modifyCartSku();
       }
+      //To Close the modal if everythink not change.
       if(!isChange){
         modalState.productAttr.show = false;
       }
     }
-    //this one is very important never never never don't remove otherwise will to unceasinf create cart order a lot;
+    //this one is very important never never never don't remove otherwise will to unceasinf create cart order a lot as below;
+    //this one is very important never never never don't remove otherwise will to unceasinf create cart order a lot as below;
+    //this one is very important never never never don't remove otherwise will to unceasinf create cart order a lot as below;
     resetAttrs();
-    //this one is very important never never never don't remove otherwise will to unceasinf create cart order a lot;
   },
   { deep: true }
 );
 
-if(customerInfo.uid == 0){
+if(customerInfo.uid == 0 && customerInfo.tourist_uid==0){
     customerInfo.updateTouristUid({tourist_uid:Date.now()});
 }
 
@@ -127,7 +135,7 @@ const addCart = () => {
     productId: attrs.product_id,
     uniqueId: attrs.new_uniqueId?attrs.new_uniqueId:attrs.uniqueId,
   };
-  console.log(params,attrs);
+  //console.log(params,attrs);
   
   if (customerInfo.uid === 0) {
     params.tourist_uid = customerInfo.tourist_uid;
@@ -270,7 +278,7 @@ const fetchCachierList = () => {
       cashierInfo.updateCashierInfo(data);
       fetchCashierCartList();
       //to switch customer info
-      switchCustomer();
+      //switchCustomer();
     }
   );
 };
@@ -300,20 +308,6 @@ const setNewCashier = (cashier) => {
 };
 
 /**
- * set new customer
- * @param customer
- */
-const setNewCustomer = (customer) => {
-  if (customer) {
-    switchCustomer(customer.uid);
-    customerInfo.updateCustomerInfo(customer);
-  } else {
-    customerInfo.resetState();
-  }
-  fetchCachierList();
-};
-
-/**
  * 1. To get customer's data;
  * 2. To get cashier's data;
  * 3. To get cart list data that is current of the store;
@@ -323,12 +317,7 @@ const init = () => {
   if (priorCustomer.value?.uid != 0) {
     customerInfo.updateCustomerInfo(priorCustomer.value);
   }
-  if (
-    cashierInfo?.pickUpOrder?.tourist_uid &&
-    cashierInfo?.pickUpOrder?.tourist_uid != 0
-  ) {
-    tourist_uid = cashierInfo.pickUpOrder.tourist_uid;
-  }
+  console.log(customerInfo.tourist_uid);
   fetchCachierList();
 };
 init();

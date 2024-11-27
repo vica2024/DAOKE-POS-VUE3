@@ -116,7 +116,6 @@ const pageInit = () => {
   menus_list.forEach((menus) => {
     menus.disabled = customerStore.uid == 0;
   });
-  
   const timer = setInterval(() => {
     if (descriptionsRef.value[0]) {
       descriptionsRef.value[0]?.initicalCutomerInfo(customerStore.uid);
@@ -186,7 +185,6 @@ const setNewCustomer = (item) => {
     customerStore.updateCustomerInfo(item);
   }
   pageInit();
-  descriptionsRef.value[0]?.initicalCutomerInfo(uid);
 };
 </script>
 <style scoped lang="less"></style>

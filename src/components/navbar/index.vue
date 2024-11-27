@@ -9,9 +9,9 @@
         />
       </div>
         <a-typography-title
-          class="text-blue-50"
+
           v-if="appStore.device === 'desktop'"
-          :style="{ margin: 0, fontSize: '18px', fontWeight: 'bold' }"
+          :style="{ margin: 0, fontSize: '18px', fontWeight: 'bold', color: 'white' }"
           :heading="5"
         >
           {{ title }}

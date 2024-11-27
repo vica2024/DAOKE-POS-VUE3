@@ -30,14 +30,6 @@
         <descriptions-item-value :item="item" />
       </a-descriptions-item>
     </a-descriptions>
-    <!-- <div class="flex justify-center gap-5 mt-6">
-      <a-button shape="round" type="primary" :disabled="!isReady" @click="clearCutomerInfo">{{
-        $t("customer.resetCustomer")
-      }}</a-button>
-      <a-button type="primary" shape="round" :disabled="!isReady">
-        {{ $t("customer.modifyCustomer") }}
-      </a-button>
-    </div> -->
   </div>
 </template>
 <style lang="less">
@@ -68,7 +60,7 @@ const froms = [
       },
       {
         label: "customer.lastName",
-        value: "real_name",
+        value: "full_name",
         span: 2,
       },
       {
@@ -125,7 +117,6 @@ const froms = [
 
 const initicalCutomerInfo = (uid) => {
   isReady.value = uid > 0;
-
   customerForms.value = froms.map((item) => ({
     ...item,
     list: item.list.map((subItem) => ({
@@ -133,7 +124,6 @@ const initicalCutomerInfo = (uid) => {
       value: isReady.value ? subItem.value : "--",
     })),
   }));
-
   if (isReady.value) {
     getCustomerInfo(uid);
   }
@@ -165,10 +155,6 @@ const getCustomerInfo = (uid) => {
       });
     });
   });
-};
-const clearCutomerInfo = () => {
-  emit("messageSent", { index: 0 });
-  initicalCutomerInfo(0);
 };
 const createCutomerInfo = () => {
   emit("messageSent", { index: 1 });

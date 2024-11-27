@@ -72,6 +72,8 @@ const getOneDeatails = async (order) => {
   isUnPayment.value = false;
   let uid = 0;
   let params = {};
+
+  
   if (order.uid) {
     uid = order.uid;
     const { data } = await getOneCustomerBasicInfo(uid);
@@ -82,6 +84,7 @@ const getOneDeatails = async (order) => {
       phone: "",
       avatar: null,
       full_name: "temporayCustomer",
+      tourist_uid:order.tourist_uid,
       balance: 0.0,
       integral: 0,
     };
@@ -156,6 +159,8 @@ const operateOrder = async (order, isDel, event) => {
     customerInfo.updateCustomerInfo(data);
   } else {
     customerInfo.resetState();
+    currentCustomerInfo.value.tourist_uid = order.tourist_uid;
+    customerInfo.updateTouristUid(currentCustomerInfo.value);
   }
   //3. To redirect to cashier page;
   router.push({ name: "menu.cashier" });

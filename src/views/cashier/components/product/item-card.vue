@@ -34,11 +34,16 @@ const props = defineProps({
 });
 const modalState = inject("modalState");
 const setAttr = (product) => {
-  modalState.productAttr.uniqueId = null;
-  modalState.productAttr.product_id = product.id;
-  modalState.productAttr.cart_id =[];
-  modalState.productAttr.defaultSku = null;
-  modalState.productAttr.cart_num = 1;
-  modalState.productAttr.show = true;
+  
+  const productAttr={
+    uniqueId:null,
+    product_id:product.id,
+    cart_id:[],
+    defaultSku:null,
+    cart_num:1,
+    show:true
+  }
+  modalState.productAttr = productAttr;
+
 };
 </script>

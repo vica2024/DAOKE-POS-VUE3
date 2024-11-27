@@ -57,13 +57,13 @@
       </a-auto-complete>
     </div>
     <div class="w-full mt-3 flex justify-between">
-      <div>
+      <div class="goods_cate">
         <a-cascader
           :options="categorys.cateList"
           @change="onSelectCate"
           :style="{ width: '200px' }"
           :placeholder="$t('categoryPlaceholder')"
-          class="bg-white w-[200px] active:bg-white border-0 hover:bg-white"
+          class="w-[200px] border-0 "
         />
       </div>
       <div>
