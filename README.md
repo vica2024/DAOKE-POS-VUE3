@@ -18,7 +18,7 @@
 ## 作者公众号
 
 [![qrcode-for-gh-bc50bba44e73-258.jpg](https://i.postimg.cc/CKPx13vN/qrcode-for-gh-bc50bba44e73-258.jpg)](https://vicazhuo.tech/daoke-retail)
-<p> 关注获取作者微信公众号可获得体验的帐号和密码</p>
+<p> 体验POS请关注微信公众号获取帐号和密码</p>
 
 ## 项目清单
 ```
