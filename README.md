@@ -15,6 +15,11 @@
 
 开源不易， 如果您能动动您的发财的小手给个小星星⭐star， 将是对我最大的支持和鼓励！
 
+## 作者公众号
+
+[![qrcode-for-gh-bc50bba44e73-258.jpg](https://i.postimg.cc/CKPx13vN/qrcode-for-gh-bc50bba44e73-258.jpg)](https://vicazhuo.tech/daoke-retail)
+<p> 关注获取作者微信公众号可获得体验的帐号和密码</p>
+
 ## 项目清单
 ```
 ├── plugin
